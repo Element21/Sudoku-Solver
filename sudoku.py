@@ -1,19 +1,18 @@
 import random
+import timeit
 
 # Fill in the board here. (0 = value to find)
 
 sudoku_board = [  # World's hardest sudoku (takes time on repl! PLEASE RUN LOCALLY)
-    [8, 0, 0,  0, 0, 0,  0, 0, 0],
-    [0, 0, 3,  6, 0, 0,  0, 0, 0],
-    [0, 7, 0,  0, 9, 0,  2, 0, 0],
-
-    [0, 5, 0,  0, 0, 7,  0, 0, 0],
-    [0, 0, 0,  0, 4, 5,  7, 0, 0],
-    [0, 0, 0,  1, 0, 0,  0, 3, 0],
-
-    [0, 0, 1,  0, 0, 0,  0, 6, 8],
-    [0, 0, 8,  5, 0, 0,  0, 1, 0],
-    [0, 9, 0,  0, 0, 0,  4, 0, 0],
+    [8, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 3, 6, 0, 0, 0, 0, 0],
+    [0, 7, 0, 0, 9, 0, 2, 0, 0],
+    [0, 5, 0, 0, 0, 7, 0, 0, 0],
+    [0, 0, 0, 0, 4, 5, 7, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 3, 0],
+    [0, 0, 1, 0, 0, 0, 0, 6, 8],
+    [0, 0, 8, 5, 0, 0, 0, 1, 0],
+    [0, 9, 0, 0, 0, 0, 4, 0, 0],
 ]
 
 # 8  1  2  |  7  5  3  |  6  4  9 SOLUTION
@@ -109,7 +108,7 @@ def solve(board, turn_num=-1):
                 count += 1
     print()
     print(
-        f"Recursion Depth: {turn_num} -- Percent Solved {100 * (board_size - count) / board_size:3.1f}%"
+        f"Turn Number: {turn_num} -- Percent Solved {100 * (board_size - count) / board_size:3.1f}%"
     )
 
     if is_solved(board):
@@ -132,12 +131,15 @@ def solve(board, turn_num=-1):
     return False
 
 # ========================= MAIN =========================
+start = timeit.default_timer()
 try:
     if solve(sudoku_board):
-        print("\n\nSolution Found!")
+        end = timeit.default_timer()
+        print(f"\n\nSolution Found! -- Elapsed Time (sec): {round(end - start, 4)}")
     else:
         print("\n\nIMPOSSIBLE.")
 
 except KeyboardInterrupt:
     print_board(sudoku_board)
     print("\nSolving Canceled...")
+
