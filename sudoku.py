@@ -82,11 +82,11 @@ def is_solved(board):
         col = get_col(board, i)
         block = get_block(board, i)
 
-        if len(row) != len(complete) or set(row) - complete != set():
+        if set(row) != complete:
             return False
-        if len(col) != len(complete) or set(col) - complete != set():
+        if set(col) != complete:
             return False
-        if len(block) != len(complete) or set(block) - complete != set():
+        if set(block) != complete:
             return False
 
     return True
@@ -118,6 +118,9 @@ def solve(board, turn_num=-1):
     # recurse
     row, col = next_loc(board)
 
+    if row is None:
+        return False
+
     for val in range(1, 10):
         if is_possible(board, row, col, val):
             board[row][col] = val
@@ -131,15 +134,16 @@ def solve(board, turn_num=-1):
     return False
 
 # ========================= MAIN =========================
-start = timeit.default_timer()
-try:
-    if solve(sudoku_board):
-        end = timeit.default_timer()
-        print(f"\n\nSolution Found! -- Elapsed Time (sec): {round(end - start, 4)}")
-    else:
-        print("\n\nIMPOSSIBLE.")
+if __name__ == "__main__":
+    start = timeit.default_timer()
+    try:
+        if solve(sudoku_board):
+            end = timeit.default_timer()
+            print(f"\n\nSolution Found! -- Elapsed Time (sec): {round(end - start, 4)}")
+        else:
+            print("\n\nIMPOSSIBLE.")
 
-except KeyboardInterrupt:
-    print_board(sudoku_board)
-    print("\nSolving Canceled...")
+    except KeyboardInterrupt:
+        print_board(sudoku_board)
+        print("\nSolving Canceled...")
 
